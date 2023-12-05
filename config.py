@@ -1,13 +1,25 @@
 import json
 
+OKX_API_INFO = {
+        'apiKey': "",
+        'secret': "",
+        'password': "",
+        'proxy_url': ""
+}
+
+WALLETS_PATH = 'wallets.txt'
+PRIVATE_KEYS_PATH = 'private_keys.txt'
+OKX_WITHDRAW_ADDRESSES = 'okx_addresses.txt'
+ENCRYPTED_DATA_PATH = 'encrypted_data.txt'
+REALTIME_SETTINGS_PATH = 'realtime_settings.json'
+
+NFTS2ME_CONTRACTS_PATH = 'data/nfts2me_contracts.json'
+
 with open('data/rpc.json') as file:
     RPC = json.load(file)
 
 with open('data/abi/erc20_abi.json') as file:
     ERC20_ABI = json.load(file)
-
-with open("accounts.txt", "r") as file:
-    ACCOUNTS = [row.strip() for row in file]
 
 with open('data/abi/bridge/deposit.json') as file:
     DEPOSIT_ABI = json.load(file)
@@ -50,6 +62,9 @@ with open("data/abi/omnisea/abi.json", "r") as file:
 
 with open("data/abi/nft2me/abi.json", "r") as file:
     NFTS2ME_ABI = json.load(file)
+
+with open("data/abi/nft2me/abi_main.json", "r") as file:
+    NFTS2ME_MAIN_ABI = json.load(file)
 
 with open("data/abi/gnosis/abi.json", "r") as file:
     SAFE_ABI = json.load(file)
@@ -106,3 +121,9 @@ DMAIL_CONTRACT = "0x47fbe95e981c0df9737b6971b451fb15fdc989d9"
 OMNISEA_CONTRACT = "0x46ce46951d12710d85bc4fe10bb29c6ea5012077"
 
 SAFE_CONTRACT = "0xa6b71e26c5e0845f74c812102ca7114b6a896ab2"
+
+NFTS2ME_CREATOR_CONTRACT = "0x2269bCeB3f4e0AA53D2FC43B1B7C5C5D13B119a5"
+
+SCROLLSCAN_URL = 'https://api.scrollscan.com/api'
+
+SCROLL_API_KEY = ''

@@ -47,5 +47,12 @@
     ],
     "explorer": "https://scrollscan.com/tx/",
     "token": "ETH"
+  },
+  "linea": {
+    "rpc": [
+      "https://1rpc.io/linea"
+    ],
+    "explorer": "https://lineascan.build/tx/",
+    "token": "ETH"
   }
 }

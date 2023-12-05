@@ -1,6 +1,7 @@
 from loguru import logger
 from settings import RETRY_COUNT
 from utils.sleeping import sleep
+import traceback
 
 
 def retry(func):
@@ -12,6 +13,7 @@ def retry(func):
                 return result
             except Exception as e:
                 logger.error(f"Error | {e}")
+                traceback.print_exc()
                 await sleep(10, 20)
                 retries += 1
 
@@ -19,10 +21,10 @@ def retry(func):
 
 
 def remove_wallet(private_key: str):
-    with open("accounts.txt", "r") as file:
+    with open("wallets.txt", "r") as file:
         lines = file.readlines()
 
-    with open("accounts.txt", "w") as file:
+    with open("wallets.txt", "w") as file:
         for line in lines:
             if private_key not in line:
                 file.write(line)

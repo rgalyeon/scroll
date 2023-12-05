@@ -7,7 +7,6 @@ import questionary
 from loguru import logger
 from questionary import Choice
 
-from config import ACCOUNTS
 from settings import (
     RANDOM_WALLET,
     SLEEP_TO,
@@ -19,54 +18,64 @@ from settings import (
 from modules_settings import *
 from utils.helpers import remove_wallet
 from utils.sleeping import sleep
+from utils.logs_handler import filter_out_utils
+from utils.password_handler import get_wallet_data
+from itertools import count
 
 
 def get_module():
+    counter = count(1)
     result = questionary.select(
         "Select a method to get started",
         choices=[
-            Choice("1) Deposit to Scroll", deposit_scroll),
-            Choice("2) Withdraw from Scroll", withdraw_scroll),
-            Choice("3) Bridge Orbiter", bridge_orbiter),
-            Choice("4) Bridge Layerswap", bridge_layerswap),
-            Choice("5) Wrap ETH", wrap_eth),
-            Choice("6) Unwrap ETH", unwrap_eth),
-            Choice("7) Swap on Skydrome", swap_skydrome),
-            Choice("8) Swap on Zebra", swap_zebra),
-            Choice("9) Swap on SyncSwap", swap_syncswap),
-            Choice("10) Deposit LayerBank", deposit_layerbank),
-            Choice("11) Withdraw LayerBank", withdraw_layerbank),
-            Choice("12) Deposit RocketSam", deposit_rocketsam),
-            Choice("13) Withdraw RocketSam", withdraw_rocketsam),
-            Choice("14) Mint and Bridge Zerius NFT", mint_zerius),
-            Choice("15) Mint ZkStars NFT", mint_zkstars),
-            Choice("16) Create NFT collection on Omnisea", create_omnisea),
-            Choice("17) Mint NFT on NFTS2ME", mint_nft),
-            Choice("18) Dmail send email", send_mail),
-            Choice("19) Create gnosis safe", create_safe),
-            Choice("20) Deploy contract", deploy_contract),
-            Choice("21) Swap tokens to ETH", swap_tokens),
-            Choice("22) Use Multiswap", swap_multiswap),
-            Choice("23) Use custom routes", custom_routes),
-            Choice("24) Check transaction count", "tx_checker"),
-            Choice("25) Exit", "exit"),
+            Choice(f"{next(counter)}) Encrypt private keys", encrypt_privates),
+            Choice(f"{next(counter)}) Deposit to Scroll", deposit_scroll),
+            Choice(f"{next(counter)}) Withdraw OKX", withdraw_okx),
+            Choice(f"{next(counter)}) Withdraw from Scroll", withdraw_scroll),
+            Choice(f"{next(counter)}) Bridge Orbiter", bridge_orbiter),
+            Choice(f"{next(counter)}) Bridge Layerswap", bridge_layerswap),
+            Choice(f"{next(counter)}) Wrap ETH", wrap_eth),
+            Choice(f"{next(counter)}) Unwrap ETH", unwrap_eth),
+            Choice(f"{next(counter)}) Swap on Skydrome", swap_skydrome),
+            Choice(f"{next(counter)}) Swap on Zebra", swap_zebra),
+            Choice(f"{next(counter)}) Swap on SyncSwap", swap_syncswap),
+            Choice(f"{next(counter)}) Deposit LayerBank", deposit_layerbank),
+            Choice(f"{next(counter)}) Withdraw LayerBank", withdraw_layerbank),
+            Choice(f"{next(counter)}) Deposit RocketSam", deposit_rocketsam),
+            Choice(f"{next(counter)}) Withdraw RocketSam", withdraw_rocketsam),
+            Choice(f"{next(counter)}) Mint and Bridge Zerius NFT", mint_zerius),
+            Choice(f"{next(counter)}) Mint ZkStars NFT", mint_zkstars),
+            Choice(f"{next(counter)}) Create NFT collection on Omnisea", create_omnisea),
+            Choice(f"{next(counter)}) Mint NFT on NFTS2ME", mint_nft),
+            Choice(f"{next(counter)}) Parse NFTS2ME collections", parse_nfts2me_contracts),
+            Choice(f"{next(counter)}) Dmail send email", send_mail),
+            Choice(f"{next(counter)}) Create gnosis safe", create_safe),
+            Choice(f"{next(counter)}) Deploy contract", deploy_contract),
+            Choice(f"{next(counter)}) Swap tokens to ETH", swap_tokens),
+            Choice(f"{next(counter)}) Use Multiswap", swap_multiswap),
+            Choice(f"{next(counter)}) Use custom routes", custom_routes),
+            Choice(f"{next(counter)}) Check transaction count", "tx_checker"),
+            Choice(f"{next(counter)}) Exit", "exit"),
         ],
         qmark="⚙️ ",
         pointer="✅ "
     ).ask()
     if result == "exit":
-        print("\n❤️ Subscribe to me – https://t.me/sybilwave\n")
-        print("🤑 Donate me: 0x00000b0ddce0bfda4531542ad1f2f5fad7b9cde9")
+        print("❤️ Author – https://t.me/sybilwave")
+        print("❤️ Fork Author – https://t.me/rgalyeon\n")
         sys.exit()
     return result
 
 
 def get_wallets():
+    wallet_data = get_wallet_data()
+
     wallets = [
         {
             "id": _id,
-            "key": key,
-        } for _id, key in enumerate(ACCOUNTS, start=1)
+            "key": wallet_data[address]['private_key'],
+            "okx_address": wallet_data[address]['okx_address'],
+        } for _id, address, in enumerate(wallet_data, start=1)
     ]
 
     return wallets
@@ -89,6 +98,11 @@ def _async_run_module(module, account_id, key):
 
 
 def main(module):
+    if module == encrypt_privates:
+        return encrypt_privates(force=True)
+    if module == parse_nfts2me_contracts:
+        return parse_nfts2me_contracts()
+
     wallets = get_wallets()
 
     if RANDOM_WALLET:
@@ -106,9 +120,10 @@ def main(module):
 
 
 if __name__ == '__main__':
-    print("❤️ Subscribe to me – https://t.me/sybilwave\n")
+    print("❤️ Author – https://t.me/sybilwave")
+    print("❤️ Fork Author – https://t.me/rgalyeon\n")
 
-    logger.add("logging.log")
+    logger.add('logs.txt', filter=filter_out_utils)
 
     module = get_module()
     if module == "tx_checker":
@@ -116,5 +131,5 @@ if __name__ == '__main__':
     else:
         main(module)
 
-    print("\n❤️ Subscribe to me – https://t.me/sybilwave\n")
-    print("🤑 Donate me: 0x00000b0ddce0bfda4531542ad1f2f5fad7b9cde9")
+    print("❤️ Author – https://t.me/sybilwave")
+    print("❤️ Fork Author – https://t.me/rgalyeon\n")

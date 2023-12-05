@@ -42,6 +42,27 @@ async def withdraw_scroll(account_id, key):
     await scroll.withdraw(min_amount, max_amount, decimal, all_amount, min_percent, max_percent)
 
 
+async def withdraw_okx(_id, key):
+    """
+    Withdraw ETH from OKX. OKX support only ETH for Starknet chain
+    ______________________________________________________
+    min_amount - min amount (ETH)
+    max_amount - max_amount (ETH)
+    terminate - if True - terminate program if money is not withdrawn
+
+    WARNING! Scroll doesn't supported by OKX NOW
+    """
+    token = 'ETH'
+
+    min_amount = 0.002
+    max_amount = 0.004
+
+    terminate = True
+
+    okx_exchange = Okx(_id, key, 'linea')
+    await okx_exchange.okx_withdraw(min_amount, max_amount, token, 'Linea', terminate)
+
+
 async def bridge_orbiter(account_id, key):
     """
     Bridge from orbiter
@@ -50,11 +71,11 @@ async def bridge_orbiter(account_id, key):
     to_chain – ethereum, base, polygon_zkevm, arbitrum, optimism, zksync, scroll | Select one
     """
 
-    from_chain = "scroll"
-    to_chain = "base"
+    from_chain = "linea"
+    to_chain = "scroll"
 
-    min_amount = 0.005
-    max_amount = 0.0051
+    min_amount = 0.003
+    max_amount = 0.003
     decimal = 4
 
     all_amount = False
@@ -352,6 +373,19 @@ async def mint_nft(account_id, key):
 
     minter = Minter(account_id, key)
     await minter.mint_nft(contracts)
+
+
+async def parse_nfts2me_contracts():
+    """
+    Parse NFT on NFTS2ME
+    ______________________________________________________
+    """
+
+    mint_price = 0
+    min_total_supply = 200
+    search_limit = 10000
+
+    await find_and_update_nfts2me_contracts(mint_price, min_total_supply, search_limit)
 
 
 async def mint_zkstars(account_id, key):
