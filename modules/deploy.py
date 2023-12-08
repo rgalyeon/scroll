@@ -1,8 +1,7 @@
-import asyncio
 from loguru import logger
 from utils.gas_checker import check_gas
 from utils.helpers import retry
-from utils.contract_generator import compile_contract
+from config import DEPLOYER_ABI, DEPLOYER_BYTECODE
 from .account import Account
 
 
@@ -17,11 +16,9 @@ class Deployer(Account):
 
         tx_data = await self.get_tx_data()
 
-        bytecode, abi = await compile_contract()
-
         contract = self.w3.eth.contract(
-            abi=abi,
-            bytecode=bytecode
+            abi=DEPLOYER_ABI,
+            bytecode=DEPLOYER_BYTECODE
         )
 
         transaction = await contract.constructor().build_transaction(
