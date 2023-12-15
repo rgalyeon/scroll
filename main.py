@@ -51,6 +51,7 @@ def get_module():
             Choice(f"{next(counter)}) Dmail send email", send_mail),
             Choice(f"{next(counter)}) Create gnosis safe", create_safe),
             Choice(f"{next(counter)}) Deploy contract", deploy_contract),
+            Choice(f"{next(counter)}) Mint Scroll Origins NFT", nft_origins),
             Choice(f"{next(counter)}) Swap tokens to ETH", swap_tokens),
             Choice(f"{next(counter)}) Use Multiswap", swap_multiswap),
             Choice(f"{next(counter)}) Use custom routes", custom_routes),

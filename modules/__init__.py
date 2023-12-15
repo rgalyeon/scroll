@@ -21,3 +21,4 @@ from .tx_checker import check_tx
 from .encrypt_privates import encrypt_privates
 from .okx import Okx
 from .nfts2me_parser import find_and_update_nfts2me_contracts
+from .nftorigins import NftOrigins

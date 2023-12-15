@@ -81,6 +81,9 @@ with open("data/abi/zkstars/abi.json", "r") as file:
 with open("data/abi/rocketsam/abi.json", "r") as file:
     ROCKETSAM_ABI = json.load(file)
 
+with open("data/abi/nft_origins/abi.json", "r") as file:
+    NFT_ORIGINS_ABI = json.load(file)
+
 ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 
 BRIDGE_CONTRACTS = {
@@ -124,6 +127,15 @@ SAFE_CONTRACT = "0xa6b71e26c5e0845f74c812102ca7114b6a896ab2"
 
 NFTS2ME_CREATOR_CONTRACT = "0x2269bCeB3f4e0AA53D2FC43B1B7C5C5D13B119a5"
 
+NFT_ORIGINS_CONTRACT = "0x74670A3998d9d6622E32D0847fF5977c37E0eC91"
+
 SCROLLSCAN_URL = 'https://api.scrollscan.com/api'
 
 SCROLL_API_KEY = ''
+
+CHAINS = {
+    'linea': 'Linea',
+    'base': 'Base',
+    'arbitrum': 'Arbitrum One',
+    'optimism': 'Optimism',
+}

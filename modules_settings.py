@@ -1,4 +1,6 @@
 import asyncio
+import random
+
 from modules import *
 
 
@@ -57,10 +59,12 @@ async def withdraw_okx(_id, key):
     min_amount = 0.002
     max_amount = 0.004
 
+    chains = ["arbitrum", "optimism", "base"]  # chain will be selected random
+
     terminate = True
 
-    okx_exchange = Okx(_id, key, 'linea')
-    await okx_exchange.okx_withdraw(min_amount, max_amount, token, 'Linea', terminate)
+    okx_exchange = Okx(_id, key, chains)
+    await okx_exchange.okx_withdraw(min_amount, max_amount, token, terminate)
 
 
 async def bridge_orbiter(account_id, key):
@@ -559,6 +563,11 @@ async def send_mail(account_id, key):
 async def create_omnisea(account_id, key):
     omnisea = Omnisea(account_id, key)
     await omnisea.create()
+
+
+async def nft_origins(account_id, key):
+    nft = NftOrigins(account_id, key)
+    await nft.mint()
 
 
 async def create_safe(account_id, key):
