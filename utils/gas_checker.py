@@ -44,15 +44,19 @@ async def get_gas():
 async def wait_gas():
     logger.info("Get GWEI")
     while True:
-        gas = await get_gas()
+        try:
+            gas = await get_gas()
 
-        max_gwei = get_max_gwei_user_settings()
-        if gas > max_gwei:
-            logger.info(f'Current GWEI: {gas} > {max_gwei}')
-            await sleep(GAS_SLEEP_FROM, GAS_SLEEP_TO)
-        else:
-            logger.success(f"GWEI is normal | current: {gas} < {max_gwei}")
-            break
+            max_gwei = get_max_gwei_user_settings()
+            if gas > max_gwei:
+                logger.info(f'Current GWEI: {gas} > {max_gwei}')
+                await sleep(GAS_SLEEP_FROM, GAS_SLEEP_TO)
+            else:
+                logger.success(f"GWEI is normal | current: {gas} < {max_gwei}")
+                break
+        except Exception as e:
+            logger.error(e)
+            await asyncio.sleep(10)
 
 
 def check_gas(func):
