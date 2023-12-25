@@ -84,6 +84,9 @@ with open("data/abi/rocketsam/abi.json", "r") as file:
 with open("data/abi/nft_origins/abi.json", "r") as file:
     NFT_ORIGINS_ABI = json.load(file)
 
+with open('data/orbiter_maker.json', 'r') as file:
+    ORBITER_MAKER = json.load(file)
+
 ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 
 BRIDGE_CONTRACTS = {
@@ -138,4 +141,5 @@ CHAINS = {
     'base': 'Base',
     'arbitrum': 'Arbitrum One',
     'optimism': 'Optimism',
+    'zksync': 'zkSync Era'
 }

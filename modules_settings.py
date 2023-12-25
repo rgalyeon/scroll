@@ -75,20 +75,21 @@ async def bridge_orbiter(account_id, key):
     to_chain – ethereum, base, polygon_zkevm, arbitrum, optimism, zksync, scroll | Select one
     """
 
-    from_chain = "linea"
-    to_chain = "scroll"
+    from_chain = "zksync"
+    to_chain = "base"
 
-    min_amount = 0.003
-    max_amount = 0.003
+    min_amount = 0.005
+    max_amount = 0.0051
     decimal = 4
 
     all_amount = False
 
     min_percent = 5
     max_percent = 10
+    save_funds = [0.0006, 0.001]
 
     orbiter = Orbiter(account_id, key, from_chain)
-    await orbiter.bridge(to_chain, min_amount, max_amount, decimal, all_amount, min_percent, max_percent)
+    await orbiter.bridge(to_chain, min_amount, max_amount, decimal, all_amount, min_percent, max_percent, save_funds)
 
 
 async def bridge_layerswap(account_id, key):
