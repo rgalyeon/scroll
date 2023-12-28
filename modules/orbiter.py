@@ -6,14 +6,18 @@ from loguru import logger
 from utils.gas_checker import check_gas
 from utils.helpers import retry
 from .account import Account
-from config import ORBITER_MAKER
+from config import ORBITER_MAKER, RPC
 from typing import List
-from web3 import Web3
+from web3 import AsyncWeb3, Web3
+from eth_account import Account as EthereumAccount
 
 
 class Orbiter(Account):
-    def __init__(self, account_id: int, private_key: str, chain: str) -> None:
-        super().__init__(account_id=account_id, private_key=private_key, chain=chain)
+    def __init__(self, account_id: int, private_key: str, chains: List) -> None:
+        chains_with_balance = self.find_balance(chains, private_key)
+        if not chains_with_balance:
+            raise ValueError('Insufficient funds on chains')
+        super().__init__(account_id=account_id, private_key=private_key, chain=random.choice(chains_with_balance))
 
         self.chain_ids = {
             "ethereum": "1",
@@ -76,6 +80,18 @@ class Orbiter(Account):
 
                 return False
 
+    def find_balance(self, chains, private_key):
+        chains_with_balance = []
+        for chain in chains:
+            self.w3 = Web3(
+                Web3.HTTPProvider(random.choice(RPC[chain]["rpc"])),
+            )
+            account = EthereumAccount.from_key(private_key)
+            balance = self.w3.eth.get_balance(self.w3.to_checksum_address(account.address))
+            if self.w3.from_wei(balance, 'ether') > 0.003:
+                chains_with_balance.append(chain)
+        return chains_with_balance
+
     @retry
     @check_gas
     async def bridge(
@@ -89,6 +105,7 @@ class Orbiter(Account):
             max_percent: int,
             save_funds: List[float]
     ):
+
         amount_wei, amount, balance = await self.get_amount(
             "ETH",
             min_amount,
@@ -106,7 +123,7 @@ class Orbiter(Account):
         contract = ORBITER_MAKER[maker_x_maker]['ETH-ETH']['makerAddress']
 
         if all_amount:
-            save_funds = Web3.from_wei(Web3.to_wei(random.uniform(*save_funds), 'ether'), 'ether')
+            save_funds = AsyncWeb3.from_wei(AsyncWeb3.to_wei(random.uniform(*save_funds), 'ether'), 'ether')
             amount -= save_funds
 
         logger.info(

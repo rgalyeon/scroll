@@ -13,7 +13,7 @@ THREAD_SLEEP_FROM = 5
 THREAD_SLEEP_TO = 5
 
 # GWEI CONTROL MODE
-CHECK_GWEI = True  # True/False
+CHECK_GWEI = False  # True/False
 MAX_GWEI = 20
 REALTIME_GWEI = True  # if true - you can change gwei while program is working
 
