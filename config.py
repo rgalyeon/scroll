@@ -1,10 +1,10 @@
 import json
 
 OKX_API_INFO = {
-        'apiKey': "",
-        'secret': "",
-        'password': "",
-        'proxy_url': ""
+    'apiKey': "",
+    'secret': "",
+    'password': "",
+    'proxy_url': ""
 }
 
 WALLETS_PATH = 'wallets.txt'
@@ -132,14 +132,84 @@ NFTS2ME_CREATOR_CONTRACT = "0x2269bCeB3f4e0AA53D2FC43B1B7C5C5D13B119a5"
 
 NFT_ORIGINS_CONTRACT = "0x74670A3998d9d6622E32D0847fF5977c37E0eC91"
 
+ORBITER_INSCRIPTIONS_CONTRACT = "0x0a88BC5c32b684D467b43C06D9e0899EfEAF59Df"
+
 SCROLLSCAN_URL = 'https://api.scrollscan.com/api'
 
 SCROLL_API_KEY = ''
 
-CHAINS = {
+CHAINS_OKX = {
     'linea': 'Linea',
     'base': 'Base',
     'arbitrum': 'Arbitrum One',
     'optimism': 'Optimism',
     'zksync': 'zkSync Era'
+}
+
+ORBITER_CHAINS_INFO = {
+    1: {'name': 'Arbitrum', 'chainId': 42161, 'id': 2},
+    2: {'name': 'Arbitrum Nova', 'chainId': 42170, 'id': 16},
+    3: {'name': 'Base', 'chainId': 8453, 'id': 21},
+    4: {'name': 'Linea', 'chainId': 59144, 'id': 23},
+    5: {'name': 'Manta', 'chainId': 169, 'id': 31},
+    6: {'name': 'Polygon', 'chainId': 137, 'id': 6},
+    7: {'name': 'Optimism', 'chainId': 10, 'id': 7},
+    8: {'name': 'Scroll', 'chainId': 534352, 'id': 19},
+    9: {'name': 'Starknet', 'chainId': 'SN_MAIN', 'id': 4},
+    10: {'name': 'Polygon zkEVM', 'chainId': 1101, 'id': 17},
+    11: {'name': 'zkSync Era', 'chainId': 324, 'id': 14},
+    12: {'name': 'Zora', 'chainId': 7777777, 'id': 30},
+    13: {'name': 'Ethereum', 'chainId': 1, 'id': 1},
+    14: {'name': 'BNB Chain', 'chainId': 56, 'id': 15},
+    26: {'name': 'Metis', 'chainId': 1088, 'id': 10},
+    28: {'name': 'OpBNB', 'chainId': 204, 'id': 25},
+    29: {'name': 'Mantle', 'chainId': 5000, 'id': 24},
+    45: {'name': 'ZKFair', 'chainId': 42766, 'id': 38}
+}
+
+LAYERZERO_WRAPED_NETWORKS = {
+    1: 1,
+    2: 2,
+    3: 27,
+    4: 34,
+    5: 14,
+    6: 15,
+    7: 3,
+    8: 35,
+    9: 19,
+    10: 23,
+    11: 21,
+    12: 36,
+    13: 13,
+    14: 33,
+    15: 37,
+    16: 38,
+    17: 20,
+    18: 17,
+    19: 25,
+    20: 32,
+    21: 31,
+    22: 4,
+    23: 44,
+    24: 5,
+    25: 29,
+    26: 39,
+    27: 26,
+    28: 16,
+    29: 30,
+    30: 40,
+    31: 7,
+    32: 24,
+    33: 6,
+    34: 10,
+    35: 8,
+    36: 41,
+    37: 18,
+    38: 22,
+    39: 42,
+    40: 43,
+    41: 12,
+    42: 28,
+    43: 11,
+    44: 46
 }

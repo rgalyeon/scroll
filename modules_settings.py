@@ -46,20 +46,20 @@ async def withdraw_scroll(account_id, key):
 
 async def withdraw_okx(_id, key):
     """
-    Withdraw ETH from OKX. OKX support only ETH for Starknet chain
+    Withdraw ETH from OKX
+
+    WARNING! OKX DOES NOT SUPPORT SCROLL CHAIN
     ______________________________________________________
     min_amount - min amount (ETH)
     max_amount - max_amount (ETH)
+    chains - ['zksync', 'arbitrum', 'linea', 'base', 'optimism']
     terminate - if True - terminate program if money is not withdrawn
-
-    WARNING! Scroll doesn't supported by OKX NOW
     """
     token = 'ETH'
+    chains = ['arbitrum', 'zksync', 'linea', 'base', 'optimism']
 
-    min_amount = 0.002
-    max_amount = 0.004
-
-    chains = ["arbitrum", "optimism", "base"]  # chain will be selected random
+    min_amount = 0.0075
+    max_amount = 0.01
 
     terminate = True
 
@@ -71,24 +71,28 @@ async def bridge_orbiter(account_id, key):
     """
     Bridge from orbiter
     ______________________________________________________
-    from_chain – ethereum, base, polygon_zkevm, arbitrum, optimism, zksync, scroll | Select one
-    to_chain – ethereum, base, polygon_zkevm, arbitrum, optimism, zksync, scroll | Select one
+    from_chain – ethereum, polygon_zkevm, arbitrum, optimism, zksync | Select one
+    to_chain – ethereum, polygon_zkevm, arbitrum, optimism, zksync | Select one
+
+    save_funds - how much eth save on the account (min and max, choose randomly)
+    min_required_amount - минимальная требуемая сумма в сети, на которую будет реагировать модуль в eth
     """
 
-    from_chains = ["arbitrum", "linea", "optimism"]
+    from_chains = ["arbitrum", "optimism", "base", "scroll", "linea"]
     to_chain = "scroll"
 
-    min_amount = 0.0009
-    max_amount = 0.0012
-    decimal = 6
+    min_amount = 0.005
+    max_amount = 0.0051
+    decimal = 4
 
-    all_amount = True
+    all_amount = False
 
-    min_percent = 95
-    max_percent = 97
-    save_funds = [0.0009, 0.0012]
+    min_percent = 5
+    max_percent = 10
+    save_funds = [0.0006, 0.001]
+    min_required_amount = 0.001
 
-    orbiter = Orbiter(account_id, key, from_chains)
+    orbiter = Orbiter(account_id, key, from_chains, min_required_amount)
     await orbiter.bridge(to_chain, min_amount, max_amount, decimal, all_amount, min_percent, max_percent, save_funds)
 
 
@@ -364,7 +368,7 @@ async def mint_zerius(account_id, key):
     sleep_to = 20
 
     zerius = Zerius(account_id, key)
-    await zerius.bridge(chains, sleep_from, sleep_to)
+    await zerius.mint(chains, sleep_from, sleep_to)
 
 
 async def mint_nft(account_id, key):
@@ -490,6 +494,21 @@ async def swap_multiswap(account_id, key):
     )
 
 
+async def inscribe_orbiter(account_id, key):
+    """
+    mint_chain - arbitrum, optimism, base, linea, scroll, zksync, polygon_zkevm, choose ONE
+    dest_chains - Support arbitrum, optimism, base, linea, scroll, zksync, polygon_zkevm
+
+    Software picks random chain from dest_chains and makes inscriptions
+    """
+
+    mint_chain = "scroll"
+    dest_chains = ["scroll"]
+
+    orb_inscriptions = OrbiterInscription(account_id, key, mint_chain)
+    await orb_inscriptions.mint_orbiter_inscription(dest_chains)
+
+
 async def custom_routes(account_id, key):
     """
     BRIDGE:
@@ -545,6 +564,37 @@ async def custom_routes(account_id, key):
 
     routes = Routes(account_id, key)
     await routes.start(use_modules, sleep_from, sleep_to, random_module)
+
+
+async def automatic_routes(account_id, key):
+    """
+    Модуль автоматически генерирует пути по которому пройдет кошелек,
+    меняя вероятности выбрать тот или иной модуль для каждого кошелька
+
+    Parameters
+    ----------
+    transaction_count - количество транзакций (не обязательно все выполнятся, модули могут пропускаться)
+    cheap_ratio - от 0 до 1, доля дешевых транзакций при построении маршрута
+    cheap_modules - список модулей, которые будут использоваться в качестве дешевых
+    expensive_modules - список модулей, которые будут использоваться в качестве дорогих
+    -------
+
+    """
+
+    transaction_count = 15
+    cheap_ratio = 0.95
+
+    sleep_from = 60000
+    sleep_to = 110000
+
+    cheap_modules = [send_mail,
+                     mint_zkstars,
+                     inscribe_orbiter,
+                     deploy_contract]
+    expensive_modules = [create_omnisea, create_safe, mint_zerius]
+
+    routes = Routes(account_id, key)
+    await routes.start_automatic(transaction_count, cheap_ratio, sleep_from, sleep_to, cheap_modules, expensive_modules)
 
 
 #########################################

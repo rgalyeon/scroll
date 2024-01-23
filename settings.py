@@ -28,7 +28,7 @@ MAX_PRIORITY_FEE = {
     "ethereum": 0.01,
     "polygon": 40,
     "arbitrum": 0.1,
-    "base": 0.1,
+    "base": 0.0001,
     "zksync": 0.25,
 }
 

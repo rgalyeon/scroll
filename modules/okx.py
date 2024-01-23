@@ -3,7 +3,7 @@ import aiohttp
 import traceback
 
 from . import Scroll
-from config import OKX_API_INFO, CHAINS
+from config import OKX_API_INFO, CHAINS_OKX
 from loguru import logger
 import random
 
@@ -189,7 +189,7 @@ class Okx(Scroll):
 
     @retry
     async def okx_withdraw(self, min_amount, max_amount, token_name, terminate=True):
-        network = CHAINS[self.chain]
+        network = CHAINS_OKX[self.chain]
         amount = round(random.uniform(min_amount, max_amount), 8)
 
         logger.info(f'[{self.account_id}][{self.address}] Start withdrawal from OKX {amount} {token_name}')
