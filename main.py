@@ -1,3 +1,4 @@
+import asyncio
 import random
 import sys
 import time
@@ -104,7 +105,7 @@ def main(module):
     if module == encrypt_privates:
         return encrypt_privates(force=True)
     if module == parse_nfts2me_contracts:
-        return parse_nfts2me_contracts()
+        return asyncio.run(parse_nfts2me_contracts())
 
     wallets = get_wallets()
 
