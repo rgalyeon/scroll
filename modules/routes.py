@@ -90,8 +90,6 @@ class Routes(Account):
         for module in run_modules:
             if module is None:
                 logger.info(f"[{self.account_id}][{self.address}] Skip module")
-                continue
-
-            await module(self.account_id, self.private_key)
-
+            else:
+                await module(self.account_id, self.private_key)
             await sleep(sleep_from, sleep_to)

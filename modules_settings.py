@@ -606,10 +606,7 @@ async def automatic_routes(account_id, key):
     sleep_to = 110000
 
     use_none = True
-    cheap_modules = [send_mail,
-                     mint_zkstars,
-                     inscribe_orbiter,
-                     deploy_contract]
+    cheap_modules = [send_mail, mint_zkstars, vote_rubyscore, deploy_contract, check_in_secondlive]
     expensive_modules = [create_omnisea, create_safe, mint_zerius]
 
     routes = Routes(account_id, key)
