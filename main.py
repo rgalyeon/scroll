@@ -53,6 +53,7 @@ def get_module():
             Choice(f"{next(counter)}) Create gnosis safe", create_safe),
             Choice(f"{next(counter)}) Deploy contract", deploy_contract),
             Choice(f"{next(counter)}) Vote on Rubyscore", vote_rubyscore),
+            Choice(f"{next(counter)}) Sign In on SecondLive", check_in_secondlive),
             Choice(f"{next(counter)}) Mint Scroll Origins NFT", nft_origins),
             Choice(f"{next(counter)}) Mint inscription on Orbiter", inscribe_orbiter),
             Choice(f"{next(counter)}) Swap tokens to ETH", swap_tokens),

@@ -518,6 +518,14 @@ async def vote_rubyscore(account_id, key):
     await rubyscore.vote()
 
 
+async def check_in_secondlive(account_id, key):
+    """
+    Check-in on second live
+    """
+    second_live = SecondLive(account_id, key)
+    await second_live.sign_in()
+
+
 async def custom_routes(account_id, key):
     """
     BRIDGE:

@@ -87,6 +87,9 @@ with open("data/abi/nft_origins/abi.json", "r") as file:
 with open('data/abi/rubyscore/abi.json', 'r') as file:
     RUBYSCORE_ABI = json.load(file)
 
+with open('data/abi/secondlive/abi.json', 'r') as file:
+    SECONDLIVE_ABI = json.load(file)
+
 with open('data/orbiter_maker.json', 'r') as file:
     ORBITER_MAKER = json.load(file)
 
@@ -138,6 +141,8 @@ NFT_ORIGINS_CONTRACT = "0x74670A3998d9d6622E32D0847fF5977c37E0eC91"
 ORBITER_INSCRIPTIONS_CONTRACT = "0x0a88BC5c32b684D467b43C06D9e0899EfEAF59Df"
 
 RUBYSCORE_CONTRACT = "0xe10Add2ad591A7AC3CA46788a06290De017b9fB4"
+
+SECONDLIVE_CONTRACT = "0xAC1f9Fadc33cC0799Cf7e3051E5f6b28C98966EE"
 
 SCROLLSCAN_URL = 'https://api.scrollscan.com/api'
 
