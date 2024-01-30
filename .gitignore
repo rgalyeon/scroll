@@ -170,3 +170,5 @@ __pycache__/
 test.py
 encrypted_data.txt
 logs.txt
+wallets.txt
+private_keys.txt

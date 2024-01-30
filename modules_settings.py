@@ -509,6 +509,15 @@ async def inscribe_orbiter(account_id, key):
     await orb_inscriptions.mint_orbiter_inscription(dest_chains)
 
 
+async def vote_rubyscore(account_id, key):
+    """
+    Vote in Scroll at Rubyscore
+    """
+
+    rubyscore = Rubyscore(account_id, key)
+    await rubyscore.vote()
+
+
 async def custom_routes(account_id, key):
     """
     BRIDGE:
@@ -577,6 +586,7 @@ async def automatic_routes(account_id, key):
     cheap_ratio - от 0 до 1, доля дешевых транзакций при построении маршрута
     cheap_modules - список модулей, которые будут использоваться в качестве дешевых
     expensive_modules - список модулей, которые будут использоваться в качестве дорогих
+    use_none - добавляет вероятность скипнуть выполнения модуля
     -------
 
     """
@@ -587,6 +597,7 @@ async def automatic_routes(account_id, key):
     sleep_from = 60000
     sleep_to = 110000
 
+    use_none = True
     cheap_modules = [send_mail,
                      mint_zkstars,
                      inscribe_orbiter,
@@ -594,7 +605,10 @@ async def automatic_routes(account_id, key):
     expensive_modules = [create_omnisea, create_safe, mint_zerius]
 
     routes = Routes(account_id, key)
-    await routes.start_automatic(transaction_count, cheap_ratio, sleep_from, sleep_to, cheap_modules, expensive_modules)
+    await routes.start_automatic(transaction_count, cheap_ratio,
+                                 sleep_from, sleep_to,
+                                 cheap_modules, expensive_modules,
+                                 use_none)
 
 
 #########################################

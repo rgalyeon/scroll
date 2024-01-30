@@ -23,3 +23,4 @@ from .okx import Okx
 from .nfts2me_parser import find_and_update_nfts2me_contracts
 from .nftorigins import NftOrigins
 from .orbiter_inscriptions import OrbiterInscription
+from .rubyscore import Rubyscore
