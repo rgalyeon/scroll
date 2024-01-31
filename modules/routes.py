@@ -47,19 +47,20 @@ class Routes(Account):
 
             # Случайно решаем, добавлять ли вложенность или повторения
             if random.random() < 0.2:  # 20% шанс добавить вложенность
-                module = [module, self.generate_nested_module(cheap_modules)]
+                module = [module, self.generate_nested_module(cheap_modules, use_none)]
             elif random.random() < 0.1:  # 10% шанс добавить повторения
                 module = (module, 1, random.randint(1, 2))
 
             sequence.append(module)
         return sequence
 
-    def generate_nested_module(self, cheap_modules):
+    def generate_nested_module(self, cheap_modules, use_none):
         """ Генерирует вложенный модуль. """
         if random.random() < 0.5:
-            return random.choice(cheap_modules + [None])
+            return random.choice(cheap_modules + ([None] if use_none else []))
         else:
-            return [random.choice(cheap_modules + [None]), self.generate_nested_module(cheap_modules)]
+            return [random.choice(cheap_modules + ([None] if use_none else [])),
+                    self.generate_nested_module(cheap_modules, use_none)]
 
     async def start(self, use_modules: list, sleep_from: int, sleep_to: int, random_module: bool):
         logger.info(f"[{self.account_id}][{self.address}] Start using routes")
